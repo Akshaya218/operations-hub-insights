@@ -1,0 +1,70 @@
+import * as React from 'react';
+// import styles from './FluentUiMigrationWebPart.module.scss'; // Styles might not be needed if Layout handles all
+import type { IFluentUiMigrationWebPartProps } from './IFluentUiMigrationWebPartProps';
+import { ThemeProvider } from '@fluentui/react/lib/Theme'; // ThemeProvider only
+import { type IReadonlyTheme } from '@microsoft/sp-component-base'; // IReadonlyTheme from sp-component-base
+
+// Import the new Layout component
+import Layout from './app/Layout';
+// Import a placeholder for content for now
+const DashboardPlaceholder: React.FC<{themeVariant?: IReadonlyTheme}> = ({themeVariant}) => <div style={{padding: '20px', background: themeVariant?.palette?.neutralLighterAlt || '#f8f8f8'}}>Dashboard Content Goes Here</div>;
+const MoMPlaceholder: React.FC<{themeVariant?: IReadonlyTheme}> = ({themeVariant}) => <div style={{padding: '20px', background: themeVariant?.palette?.neutralLighterAlt || '#f8f8f8'}}>Minutes of Meeting Content Goes Here</div>;
+const DoEPlaceholder: React.FC<{themeVariant?: IReadonlyTheme}> = ({themeVariant}) => <div style={{padding: '20px', background: themeVariant?.palette?.neutralLighterAlt || '#f8f8f8'}}>Design of Experiments Content Goes Here</div>;
+const ReportsPlaceholder: React.FC<{themeVariant?: IReadonlyTheme}> = ({themeVariant}) => <div style={{padding: '20px', background: themeVariant?.palette?.neutralLighterAlt || '#f8f8f8'}}>Reports Content Goes Here</div>;
+const SettingsPlaceholder: React.FC<{themeVariant?: IReadonlyTheme}> = ({themeVariant}) => <div style={{padding: '20px', background: themeVariant?.palette?.neutralLighterAlt || '#f8f8f8'}}>Settings Content Goes Here</div>;
+
+
+export default class FluentUiMigrationWebPart extends React.Component<IFluentUiMigrationWebPartProps, { activeSection: string }> {
+
+  constructor(props: IFluentUiMigrationWebPartProps) {
+    super(props);
+    this.state = {
+      activeSection: 'dashboard' // Default section
+    };
+  }
+
+  private handleSectionChange = (section: string) => {
+    this.setState({ activeSection: section });
+  }
+
+  public render(): React.ReactElement<IFluentUiMigrationWebPartProps> {
+    const {
+      themeVariant
+    } = this.props;
+
+    const currentTheme: Partial<IReadonlyTheme> | undefined = themeVariant as Partial<IReadonlyTheme> | undefined;
+
+    let contentComponent;
+    switch (this.state.activeSection) {
+      case 'dashboard':
+        contentComponent = <DashboardPlaceholder themeVariant={themeVariant} />;
+        break;
+      case 'mom':
+        contentComponent = <MoMPlaceholder themeVariant={themeVariant} />;
+        break;
+      case 'doe':
+        contentComponent = <DoEPlaceholder themeVariant={themeVariant} />;
+        break;
+      case 'reports':
+        contentComponent = <ReportsPlaceholder themeVariant={themeVariant} />;
+        break;
+      case 'settings':
+        contentComponent = <SettingsPlaceholder themeVariant={themeVariant} />;
+        break;
+      default:
+        contentComponent = <DashboardPlaceholder themeVariant={themeVariant} />;
+    }
+
+    return (
+      <ThemeProvider theme={currentTheme} applyTo="body">
+          <Layout
+            activeSection={this.state.activeSection}
+            onSectionChange={this.handleSectionChange}
+            themeVariant={themeVariant}
+          >
+            { contentComponent }
+          </Layout>
+      </ThemeProvider>
+    );
+  }
+}

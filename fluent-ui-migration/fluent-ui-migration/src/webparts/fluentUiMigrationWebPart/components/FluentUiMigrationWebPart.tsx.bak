@@ -1,0 +1,55 @@
+import * as React from 'react';
+import styles from './FluentUiMigrationWebPart.module.scss';
+import type { IFluentUiMigrationWebPartProps } from './IFluentUiMigrationWebPartProps';
+import { escape } from '@microsoft/sp-lodash-subset';
+
+// Import Fluent UI Button
+import { PrimaryButton } from '@fluentui/react/lib/Button';
+// It's good practice to import specific components to reduce bundle size.
+// For example, if only PrimaryButton is needed, import { PrimaryButton } from '@fluentui/react/lib/Button';
+// Or, if using many components from Button, import * as Button from '@fluentui/react/lib/Button';
+
+export default class FluentUIMigrationWebPart extends React.Component<IFluentUiMigrationWebPartProps, {}> {
+  public render(): React.ReactElement<IFluentUiMigrationWebPartProps> {
+    const {
+      description,
+      isDarkTheme,
+      environmentMessage,
+      hasTeamsContext,
+      userDisplayName
+    } = this.props;
+
+    return (
+      <section className={`${styles.fluentUiMigrationWebPart} ${hasTeamsContext ? styles.teams : ''}`}>
+        <div className={styles.welcome}>
+          <img alt="" src={isDarkTheme ? require('../assets/welcome-dark.png') : require('../assets/welcome-light.png')} className={styles.welcomeImage} />
+          <h2>Well done, {escape(userDisplayName)}!</h2>
+          <div>{environmentMessage}</div>
+          <div>Web part description: <strong>{escape(description)}</strong></div>
+        </div>
+        <div>
+          <h3>Welcome to SharePoint Framework with Fluent UI!</h3>
+          <p>
+            This is a sample web part demonstrating the integration of Fluent UI.
+          </p>
+          {/* Add Fluent UI PrimaryButton */}
+          <PrimaryButton
+            text="Click Me (Fluent UI Button)"
+            onClick={() => alert('Fluent UI Button Clicked!')}
+            iconProps={{ iconName: 'AddFriend' }}
+          />
+          <h4>Learn more about SPFx development:</h4>
+          <ul className={styles.links}>
+            <li><a href="https://aka.ms/spfx" target="_blank" rel="noreferrer">SharePoint Framework Overview</a></li>
+            <li><a href="https://aka.ms/spfx-yeoman-graph" target="_blank" rel="noreferrer">Use Microsoft Graph in your solution</a></li>
+            <li><a href="https://aka.ms/spfx-yeoman-teams" target="_blank" rel="noreferrer">Build for Microsoft Teams using SharePoint Framework</a></li>
+            <li><a href="https://aka.ms/spfx-yeoman-viva" target="_blank" rel="noreferrer">Build for Microsoft Viva Connections using SharePoint Framework</a></li>
+            <li><a href="https://aka.ms/spfx-toolchain" target="_blank" rel="noreferrer">SharePoint Framework Toolchain</a></li>
+            <li><a href="https://aka.ms/spfx-api" target="_blank" rel="noreferrer">SharePoint Framework API reference</a></li>
+            <li><a href="https://aka.ms/m365pnp" target="_blank" rel="noreferrer">Microsoft 365 Developer Community</a></li>
+          </ul>
+        </div>
+      </section>
+    );
+  }
+}

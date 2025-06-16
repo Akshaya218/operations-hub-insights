@@ -1,0 +1,21 @@
+{
+  "@microsoft/generator-sharepoint": {
+    "whichFolder": "subdir",
+    "solutionName": "fluent-ui-migration",
+    "environment": "spo",
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "componentType": "webpart",
+    "template": "react",
+    "componentName": "FluentUIMigrationWebPart",
+    "plusBeta": false,
+    "isCreatingSolution": true,
+    "nodeVersion": "18.19.1",
+    "sdksVersions": {},
+    "version": "1.21.1",
+    "libraryName": "fluent-ui-migration",
+    "libraryId": "869ebde0-abb9-4547-923a-c05f394d2b8e",
+    "packageManager": "npm",
+    "solutionShortDescription": "fluent-ui-migration description"
+  }
+}
