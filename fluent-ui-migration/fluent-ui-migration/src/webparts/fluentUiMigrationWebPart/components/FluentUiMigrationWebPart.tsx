@@ -7,6 +7,7 @@ import Layout from './app/Layout';
 import Dashboard from './app/Dashboard';
 import MinutesOfMeeting from './app/MinutesOfMeeting'; // Import actual MoM component
 import DesignOfExperiments from './app/DesignOfExperiment';
+import AllProjectsTracking from './app/AllProjectsTracking';
 
 // Placeholders for other sections
 const ReportsPlaceholder: React.FC<{themeVariant?: SPTheme}> = ({themeVariant}) => <div style={{padding: '20px', background: themeVariant?.palette?.neutralLighterAlt || '#f8f8f8'}}>Reports Content Goes Here</div>;
@@ -42,6 +43,9 @@ export default class FluentUiMigrationWebPart extends React.Component<IFluentUiM
         break;
       case 'doe':
         contentComponent = <DesignOfExperiments themeVariant={themeVariant} />;
+        break;
+        case 'allProjects':
+        contentComponent = <AllProjectsTracking themeVariant={themeVariant} />;
         break;
       case 'reports':
         contentComponent = <ReportsPlaceholder themeVariant={themeVariant} />;
