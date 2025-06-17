@@ -1,0 +1,18 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "fluent-ui-migration-web-part-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/fluentUiMigrationWebPart/FluentUiMigrationWebPartWebPart.js",
+          "manifest": "./src/webparts/fluentUiMigrationWebPart/FluentUiMigrationWebPartWebPart.manifest.json"
+        }
+      ]
+    }
+  },
+  "externals": {},
+  "localizedResources": {
+    "FluentUiMigrationWebPartWebPartStrings": "lib/webparts/fluentUiMigrationWebPart/loc/{locale}.js"
+  }
+}
