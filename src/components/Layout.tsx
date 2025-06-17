@@ -7,7 +7,8 @@ import {
   ChevronRight,
   Folder,
   FolderOpen,
-  Plus
+  Plus,
+  Briefcase
 } from 'lucide-react';
 
 interface LayoutProps {
@@ -23,6 +24,7 @@ const Layout: React.FC<LayoutProps> = ({ children, activeSection, onSectionChang
     { id: 'dashboard', label: 'Dashboard', icon: Folder },
     { id: 'mom', label: 'Minutes of Meeting', icon: Calendar },
     { id: 'doe', label: 'Design of Experiments', icon: FolderOpen },
+    { id: 'allProjects', label: 'All Projects', icon: Briefcase },
     { id: 'reports', label: 'Reports', icon: Folder },
     { id: 'settings', label: 'Settings', icon: Settings },
   ];
