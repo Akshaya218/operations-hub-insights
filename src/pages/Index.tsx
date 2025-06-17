@@ -4,6 +4,7 @@ import Layout from '@/components/Layout';
 import Dashboard from '@/components/Dashboard';
 import MinutesOfMeeting from '@/components/MinutesOfMeeting';
 import DesignOfExperiments from '@/components/DesignOfExperiments';
+import AllProjectsTracking from '@/components/AllProjectsTracking';
 
 const Index = () => {
   const [activeSection, setActiveSection] = useState('dashboard');
@@ -16,6 +17,8 @@ const Index = () => {
         return <MinutesOfMeeting />;
       case 'doe':
         return <DesignOfExperiments />;
+      case 'allProjects':
+        return <AllProjectsTracking />;
       case 'reports':
         return (
           <div className="sharepoint-card">
