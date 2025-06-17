@@ -6,9 +6,9 @@ import type { IReadonlyTheme as SPTheme } from '@microsoft/sp-component-base'; /
 import Layout from './app/Layout';
 import Dashboard from './app/Dashboard';
 import MinutesOfMeeting from './app/MinutesOfMeeting'; // Import actual MoM component
+import DesignOfExperiments from './app/DesignOfExperiment';
 
 // Placeholders for other sections
-const DoEPlaceholder: React.FC<{themeVariant?: SPTheme}> = ({themeVariant}) => <div style={{padding: '20px', background: themeVariant?.palette?.neutralLighterAlt || '#f8f8f8'}}>Design of Experiments Content Goes Here</div>;
 const ReportsPlaceholder: React.FC<{themeVariant?: SPTheme}> = ({themeVariant}) => <div style={{padding: '20px', background: themeVariant?.palette?.neutralLighterAlt || '#f8f8f8'}}>Reports Content Goes Here</div>;
 const SettingsPlaceholder: React.FC<{themeVariant?: SPTheme}> = ({themeVariant}) => <div style={{padding: '20px', background: themeVariant?.palette?.neutralLighterAlt || '#f8f8f8'}}>Settings Content Goes Here</div>;
 
@@ -41,7 +41,7 @@ export default class FluentUiMigrationWebPart extends React.Component<IFluentUiM
         contentComponent = <MinutesOfMeeting themeVariant={themeVariant} />; // Use actual MoM
         break;
       case 'doe':
-        contentComponent = <DoEPlaceholder themeVariant={themeVariant} />;
+        contentComponent = <DesignOfExperiments themeVariant={themeVariant} />;
         break;
       case 'reports':
         contentComponent = <ReportsPlaceholder themeVariant={themeVariant} />;

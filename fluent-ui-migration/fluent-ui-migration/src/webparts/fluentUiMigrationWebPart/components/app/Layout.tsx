@@ -1,5 +1,5 @@
-import * as React from 'react'; // Changed to import * as React
-import { type IReadonlyTheme } from '@microsoft/sp-component-base'; // Added for themeVariant type
+import * as React from 'react';
+import { type IReadonlyTheme } from '@microsoft/sp-component-base';
 import {
   Calendar,
   Settings,
@@ -9,17 +9,18 @@ import {
   FolderOpen,
   Plus
 } from 'lucide-react';
+import { Stack, DefaultButton, Persona, PersonaSize, Text } from '@fluentui/react';
 
 // Define props for Layout: activeSection and onSectionChange
 interface LayoutProps {
   children: React.ReactNode;
   activeSection: string;
   onSectionChange: (section: string) => void;
-  themeVariant?: IReadonlyTheme; // Changed type from any
+  themeVariant?: IReadonlyTheme;
 }
 
 const Layout: React.FC<LayoutProps> = ({ children, activeSection, onSectionChange, themeVariant }) => {
-  const [sidebarCollapsed, setSidebarCollapsed] = React.useState(false); // Changed to React.useState
+  const [sidebarCollapsed, setSidebarCollapsed] = React.useState(false);
 
   const menuItems = [
     { id: 'dashboard', label: 'Dashboard', icon: Folder },
@@ -29,107 +30,149 @@ const Layout: React.FC<LayoutProps> = ({ children, activeSection, onSectionChang
     { id: 'settings', label: 'Settings', icon: Settings },
   ];
 
-  // Basic styling for demonstration, to be replaced by Fluent UI & theme
-  const sidebarStyle: React.CSSProperties = {
-    backgroundColor: themeVariant?.palette?.white || '#ffffff', // Example of using theme
-    borderRight: `1px solid ${themeVariant?.palette?.neutralLighter || '#e0e0e0'}`,
-    transition: 'width 0.3s',
-    width: sidebarCollapsed ? '64px' : '256px',
-    display: 'flex',
-    flexDirection: 'column'
-  };
-
-  const headerStyle: React.CSSProperties = {
-    backgroundColor: themeVariant?.palette?.white || '#ffffff',
-    borderBottom: `1px solid ${themeVariant?.palette?.neutralLighter || '#e0e0e0'}`,
-    padding: '16px 24px',
-  };
-
-  const contentStyle: React.CSSProperties = {
-    padding: '24px',
-    flex: 1,
-    overflowY: 'auto'
-  };
-
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', width: '100%' }}>
+    <Stack horizontal styles={{ root: { minHeight: '100vh', width: '100%' } }}>
       {/* Sidebar */}
-      <div style={sidebarStyle}>
-        <div style={{ padding: '16px', borderBottom: `1px solid ${themeVariant?.palette?.neutralLighter || '#e0e0e0'}` }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            {!sidebarCollapsed && (
-              <h2 style={{ fontSize: '1.125rem', fontWeight: '600', color: themeVariant?.palette?.neutralPrimary || '#333' }}>Operations Hub</h2>
-            )}
-            <button
-              onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-              style={{ padding: '4px', borderRadius: '4px', background: 'transparent', border: 'none', cursor: 'pointer' }}
-              aria-label={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
-            >
-              {sidebarCollapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
-            </button>
-          </div>
-        </div>
-
-        <nav style={{ padding: '8px' }}>
+      <Stack
+        styles={{
+          root: {
+            backgroundColor: themeVariant?.palette?.white,
+            borderRight: `1px solid ${themeVariant?.palette?.neutralLighter}`,
+            transition: 'width 0.3s',
+            width: sidebarCollapsed ? 64 : 256,
+            minWidth: sidebarCollapsed ? 64 : 256,
+            flexShrink: 0,
+            zIndex: 2,
+          }
+        }}
+      >
+        <Stack
+          horizontal
+          verticalAlign="center"
+          horizontalAlign="space-between"
+          styles={{
+            root: {
+              padding: 16,
+              borderBottom: `1px solid ${themeVariant?.palette?.neutralLighter}`,
+            }
+          }}
+        >
+          {!sidebarCollapsed && (
+            <Text variant="large" styles={{ root: { fontWeight: 600, color: themeVariant?.palette?.neutralPrimary } }}>
+              Operations Hub
+            </Text>
+          )}
+          <DefaultButton
+            onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+            styles={{
+              root: {
+                minWidth: 32,
+                height: 32,
+                borderRadius: 4,
+                background: 'transparent',
+                border: 'none',
+                padding: 0,
+              }
+            }}
+            aria-label={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+          >
+            {sidebarCollapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
+          </DefaultButton>
+        </Stack>
+        <Stack tokens={{ childrenGap: 4 }} styles={{ root: { padding: 8 } }}>
           {menuItems.map((item) => {
             const Icon = item.icon;
             const isActive = activeSection === item.id;
             return (
-              <button
+              <DefaultButton
                 key={item.id}
                 onClick={() => onSectionChange(item.id)}
-                style={{
-                  width: '100%',
-                  display: 'flex',
-                  alignItems: 'center',
-                  padding: '12px',
-                  textAlign: 'left',
-                  borderRadius: '4px',
-                  backgroundColor: isActive ? (themeVariant?.palette?.themeLighter || '#e0e0ff') : 'transparent',
-                  color: isActive ? (themeVariant?.palette?.themePrimary || '#0078d4') : (themeVariant?.palette?.neutralPrimary || '#333'),
-                  borderRight: isActive ? `2px solid ${themeVariant?.palette?.themePrimary || '#0078d4'}` : 'none',
-                  marginBottom: '4px',
-                  cursor: 'pointer',
-                  border: 'none'
+                styles={{
+                  root: {
+                    width: '100%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    padding: '12px 8px',
+                    textAlign: 'left',
+                    borderRadius: 4,
+                    backgroundColor: isActive ? (themeVariant?.palette?.themeLighter) : 'transparent',
+                    color: isActive ? (themeVariant?.palette?.themePrimary) : (themeVariant?.palette?.neutralPrimary),
+                    borderRight: isActive ? `2px solid ${themeVariant?.palette?.themePrimary}` : 'none',
+                    marginBottom: 2,
+                    fontWeight: 500,
+                  }
                 }}
                 title={item.label}
               >
-                <Icon size={20} style={{ marginRight: sidebarCollapsed ? '0' : '12px', flexShrink: 0 }} />
-                {!sidebarCollapsed && <span style={{ fontWeight: '500' }}>{item.label}</span>}
-              </button>
+                <Icon size={20} style={{ marginRight: sidebarCollapsed ? 0 : 12, flexShrink: 0 }} />
+                {!sidebarCollapsed && <span>{item.label}</span>}
+              </DefaultButton>
             );
           })}
-        </nav>
-      </div>
+        </Stack>
+      </Stack>
 
       {/* Main Content */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+      <Stack grow styles={{ root: { display: 'flex', flexDirection: 'column', minWidth: 0 } }}>
         {/* Top Navigation */}
-        <header style={headerStyle}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <div>
-              <h1 style={{ fontSize: '1.5rem', fontWeight: '600', color: themeVariant?.palette?.neutralPrimary || '#333' }}>Operations Hub</h1>
-              <p style={{ fontSize: '0.875rem', color: themeVariant?.palette?.neutralSecondary || '#666' }}>Manage meetings and experiments efficiently</p>
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              {/* This button should eventually use Fluent UI Button */}
-              <button style={{ padding: '8px 12px', border: '1px solid #ccc', borderRadius: '4px', background: '#f0f0f0', cursor: 'pointer' }}>
-                <Plus size={16} style={{ marginRight: '8px' }} />
-                New Item
-              </button>
-              <div style={{ width: '32px', height: '32px', backgroundColor: themeVariant?.palette?.themePrimary || '#0078d4', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: themeVariant?.palette?.white || '#fff', fontSize: '0.875rem', fontWeight: '500' }}>
-                U
-              </div>
-            </div>
-          </div>
-        </header>
+        <Stack
+          horizontal
+          verticalAlign="center"
+          horizontalAlign="space-between"
+          styles={{
+            root: {
+              backgroundColor: themeVariant?.palette?.white,
+              borderBottom: `1px solid ${themeVariant?.palette?.neutralLighter}`,
+              padding: '16px 24px',
+              zIndex: 1,
+            }
+          }}
+        >
+          <Stack>
+            <Text variant="xLarge" styles={{ root: { fontWeight: 600, color: themeVariant?.palette?.neutralPrimary } }}>
+              Operations Hub
+            </Text>
+            <Text variant="medium" styles={{ root: { color: themeVariant?.palette?.neutralSecondary } }}>
+              Manage meetings and experiments efficiently
+            </Text>
+          </Stack>
+          <Stack horizontal tokens={{ childrenGap: 12 }} verticalAlign="center">
+            <DefaultButton
+              styles={{
+                root: {
+                  padding: '8px 12px',
+                  border: `1px solid ${themeVariant?.palette?.neutralLight}`,
+                  borderRadius: 4,
+                  background: themeVariant?.palette?.neutralLighter,
+                  fontWeight: 500,
+                }
+              }}
+              iconProps={{ iconName: undefined }}
+            >
+              <Plus size={16} style={{ marginRight: 8 }} />
+              New Item
+            </DefaultButton>
+            <Persona
+              text="User"
+              size={PersonaSize.size32}
+              hidePersonaDetails
+              styles={{
+                root: {
+                  backgroundColor: themeVariant?.palette?.themePrimary,
+                  color: themeVariant?.palette?.white,
+                  fontWeight: 500,
+                }
+              }}
+            />
+          </Stack>
+        </Stack>
 
         {/* Page Content */}
-        <main style={contentStyle}>
+        <Stack grow styles={{ root: { padding: 24, minWidth: 0, overflowY: 'auto' } }}>
           {children}
-        </main>
-      </div>
-    </div>
+        </Stack>
+      </Stack>
+    </Stack>
   );
 };
 
