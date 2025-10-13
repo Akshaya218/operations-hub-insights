@@ -7,7 +7,8 @@ import {
   ChevronRight,
   Folder,
   FolderOpen,
-  Plus
+  Plus,
+  LayoutDashboard // Added for Reports Dashboard
 } from 'lucide-react';
 import { Stack, DefaultButton, Persona, PersonaSize, Text } from '@fluentui/react';
 
@@ -26,7 +27,8 @@ const Layout: React.FC<LayoutProps> = ({ children, activeSection, onSectionChang
     { id: 'dashboard', label: 'Dashboard', icon: Folder },
     { id: 'mom', label: 'Minutes of Meeting', icon: Calendar },
     { id: 'doe', label: 'Design of Experiments', icon: FolderOpen },
-    { id: 'reports', label: 'Reports', icon: Folder },
+    // { id: 'reports', label: 'Reports', icon: Folder }, // Original "Reports"
+    { id: 'reportsDashboard', label: 'Reports Dashboard', icon: LayoutDashboard },
     { id: 'settings', label: 'Settings', icon: Settings },
   ];
 
